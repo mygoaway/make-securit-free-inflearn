@@ -31,7 +31,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 	// 함수 종료시 AuthenticationPrincipal 어노테이션이 만들어진다.
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-		System.out.println("getClientRegistration = " + userRequest.getClientRegistration()); // registrationId로 어떤 OAuth로 로그인 했는지 확인이 가능
+		System.out.println("getClientRegistration = " + userRequest.getClientRegistration()); // registrationId로 어떤 OAuth로 로그인 했는지 확인이 가능, 우리 서버의 기본정보가 들어가 있음
 		System.out.println("getTokenValue = " + userRequest.getAccessToken().getTokenValue());
 
 		OAuth2User oAuth2User = super.loadUser(userRequest);

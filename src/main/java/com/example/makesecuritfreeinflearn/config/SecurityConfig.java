@@ -28,10 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.csrf().disable();
 		http.authorizeRequests()
-			.antMatchers("/user/**").authenticated()
-			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')")
-			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+			//.antMatchers("/user/**").authenticated()
+			//.antMatchers("/user/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+			//.antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')")
+			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 			.anyRequest().permitAll()
 
 		.and()

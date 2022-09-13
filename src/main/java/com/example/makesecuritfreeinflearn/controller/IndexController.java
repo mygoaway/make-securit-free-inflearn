@@ -5,6 +5,7 @@ import com.example.makesecuritfreeinflearn.model.User;
 import com.example.makesecuritfreeinflearn.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -50,7 +51,6 @@ public class IndexController {
 
 		OAuth2User user = (OAuth2User) authentication.getPrincipal();
 		System.out.println("oAuth2User = " +user.getAttributes());
-		// super.loadUser(userRequest).getAttributes()
 
 		System.out.println("oAuth2User = " + oAuth2User.getAttributes());
 
@@ -63,6 +63,7 @@ public class IndexController {
 	}
 
 	// OAuth 로그인 / 일반 로그인을 해도 PrincipalDetails로 받을 수 있음
+	@Secured("ROLE_USER")
 	@GetMapping("/user")
 	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principal) {
 		System.out.println("Principal : " + principal.getUser());
@@ -75,7 +76,7 @@ public class IndexController {
 
 		return "유저 페이지입니다.";
 	}
-
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/admin")
 	public @ResponseBody String admin() {
 		return "어드민 페이지입니다.";
@@ -108,5 +109,11 @@ public class IndexController {
 		user.setRole("ROLE_USER");
 		userRepository.save(user);
 		return "redirect:/";
+	}
+
+	@PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+	@GetMapping("/data")
+	public @ResponseBody String data() {
+		return "데이터정보";
 	}
 }
